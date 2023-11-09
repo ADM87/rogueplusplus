@@ -18,7 +18,7 @@
     <ClCompile Include="rpp_game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game.cpp">
+    <ClCompile Include="Source\Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Keyboard\Keyboard.cpp">
@@ -27,9 +27,12 @@
     <ClCompile Include="Source\Structures\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\World\World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Game.h">
+    <ClInclude Include="Headers\Game\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Keyboard\Keyboard.h">
@@ -45,6 +48,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Structures\Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\World\World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Game\GameConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Structures\Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

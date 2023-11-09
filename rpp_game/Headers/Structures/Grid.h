@@ -8,6 +8,7 @@ namespace rpp
     {
     public:
 
+        Grid() = default;
         Grid(unsigned int _width, unsigned int _height, int _fill = 0);
         Grid(const Grid& _grid);
 

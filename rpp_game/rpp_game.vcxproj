@@ -131,17 +131,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="rpp_game.cpp" />
-    <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Game\Game.cpp" />
     <ClCompile Include="Source\Keyboard\Keyboard.cpp" />
     <ClCompile Include="Source\Structures\Grid.cpp" />
+    <ClCompile Include="Source\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Game.h" />
+    <ClInclude Include="Headers\Game\Game.h" />
+    <ClInclude Include="Headers\Game\GameConstants.h" />
     <ClInclude Include="Headers\Keyboard\Keyboard.h" />
     <ClInclude Include="Headers\Keyboard\KeyCodes.h" />
     <ClInclude Include="Headers\Math\Point2.h" />
     <ClInclude Include="Headers\Math\Rectangle.h" />
     <ClInclude Include="Headers\Structures\Grid.h" />
+    <ClInclude Include="Headers\Structures\Token.h" />
+    <ClInclude Include="Headers\World\World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

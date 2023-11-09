@@ -1,8 +1,9 @@
-#include <Game.h>
+#include <Game/Game.h>
 
 int main()
 {
-    rpp::Game game;
+    rpp::Game game = rpp::Game(
+        rpp::Point2Int(50, 50));
 
     do {
 
