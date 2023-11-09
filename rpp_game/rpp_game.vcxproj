@@ -131,12 +131,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="rpp_game.cpp" />
+    <ClCompile Include="Source\Camera\Camera.cpp" />
     <ClCompile Include="Source\Game\Game.cpp" />
     <ClCompile Include="Source\Keyboard\Keyboard.cpp" />
     <ClCompile Include="Source\Structures\Grid.cpp" />
     <ClCompile Include="Source\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Camera\Camera.h" />
     <ClInclude Include="Headers\Game\Game.h" />
     <ClInclude Include="Headers\Game\GameConstants.h" />
     <ClInclude Include="Headers\Keyboard\Keyboard.h" />

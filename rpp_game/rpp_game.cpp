@@ -3,7 +3,8 @@
 int main()
 {
     rpp::Game game = rpp::Game(
-        rpp::Point2Int(50, 50));
+        rpp::Point2Int(50, 50),
+        rpp::Point2Int(45, 15));
 
     do {
 

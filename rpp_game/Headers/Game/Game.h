@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Camera/Camera.h>
 #include <Keyboard/Keyboard.h>
 #include <Math/Point2.h>
 #include <World/World.h>
@@ -10,7 +11,7 @@ namespace rpp
     {
     public:
 
-        Game(Point2Int _worldSize);
+        Game(Point2Int _worldSize, Point2Int _viewSize);
 
         void Update();
         void Render();
@@ -23,6 +24,7 @@ namespace rpp
 
         Keyboard m_keyboard;
         World m_world;
+        Camera m_camera;
 
         bool m_renderGame;
     };

@@ -1,6 +1,7 @@
 #include <World/World.h>
 
 #include <iostream>
+#include <random>
 #include <string>
 
 using namespace rpp;
@@ -17,10 +18,13 @@ World::World(Point2Int _worldSize, std::vector<int> _layers, std::vector<std::pa
     , worldSize(_worldSize)
 {
     for (auto& layer : _layers)
-        m_layers.insert({ layer, Grid(_worldSize.x, _worldSize.y, 1) });
+        m_layers.insert({ layer, Grid(_worldSize.x, _worldSize.y) });
 
     for (auto& token : _tokens)
         m_tokens.insert({ token.first, Token(token.first, token.second) });
+
+    for (int i = 0; i < _worldSize.x * _worldSize.y; i++)
+        m_layers[0].Set(i, rand() % 2);
 }
 
 void World::RenderRegion(const RectangleInt& _region)
