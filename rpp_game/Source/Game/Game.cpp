@@ -10,20 +10,20 @@ using namespace rpp;
 Game::Game(Point2Int _worldSize, Point2Int _viewSize)
     : m_keyboard(
         {
-            KeyCodes::ESCAPE,
-            KeyCodes::UP,
-            KeyCodes::DOWN,
-            KeyCodes::LEFT,
-            KeyCodes::RIGHT            
+            KeyCodes::ESCAPE_KEY,
+            KeyCodes::UP_KEY,
+            KeyCodes::DOWN_KEY,
+            KeyCodes::LEFT_KEY,
+            KeyCodes::RIGHT_KEY            
         })
     , m_world(
         _worldSize,
         {
-            GameLayers::BACKGROUND
+            GameLayers::DEFAULT_LAYER
         },
         {
-            { GameTokenKeys::EMPTY, ' ' },
-            { GameTokenKeys::WALL,  '#' }
+            { GameTokens::EMPTY_TOKEN, ' ' },
+            { GameTokens::WALL_TOKEN,  '#' }
         })
     , m_camera(_viewSize)
     , m_renderGame(true)
@@ -37,13 +37,13 @@ void Game::Update()
 
     Point2Int delta;
 
-    if (m_keyboard.IsDown(KeyCodes::UP))
+    if (m_keyboard.IsDown(KeyCodes::UP_KEY))
         delta.y = -1;
-    if (m_keyboard.IsDown(KeyCodes::DOWN))
+    if (m_keyboard.IsDown(KeyCodes::DOWN_KEY))
         delta.y = 1;
-    if (m_keyboard.IsDown(KeyCodes::LEFT))
+    if (m_keyboard.IsDown(KeyCodes::LEFT_KEY))
         delta.x = -1;
-    if (m_keyboard.IsDown(KeyCodes::RIGHT))
+    if (m_keyboard.IsDown(KeyCodes::RIGHT_KEY))
         delta.x = 1;
 
     if (delta.x != 0 || delta.y != 0)
@@ -75,5 +75,5 @@ bool Game::HasRenderRequest()
 
 bool Game::IsRunning()
 {
-    return !m_keyboard.IsDown(KeyCodes::ESCAPE);
+    return !m_keyboard.IsDown(KeyCodes::ESCAPE_KEY);
 }

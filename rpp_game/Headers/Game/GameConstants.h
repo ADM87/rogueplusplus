@@ -4,12 +4,12 @@ namespace rpp
 {
     enum GameLayers
     {
-        BACKGROUND = 0
+        DEFAULT_LAYER = 0
     };
 
-    enum GameTokenKeys
+    enum GameTokens
     {
-        EMPTY   = 0,
-        WALL    = 1
+        EMPTY_TOKEN   = 0,
+        WALL_TOKEN    = 1
     };
 }
