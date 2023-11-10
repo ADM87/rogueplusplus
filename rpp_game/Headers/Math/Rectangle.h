@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Math/Point2.h>
+
 namespace rpp
 {
     struct RectangleInt
@@ -29,5 +31,8 @@ namespace rpp
         {}
 
         inline int Area() const { return width * height; }
+
+        bool Contains(const int& _x, const int& _y) const;
+        bool Contains(const Point2Int& _point) const;
     };
 }

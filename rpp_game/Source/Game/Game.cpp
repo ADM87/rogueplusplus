@@ -1,5 +1,5 @@
+#include <RPPConstants.h>
 #include <Game/Game.h>
-#include <Game/GameConstants.h>
 
 using namespace rpp;
 
@@ -19,16 +19,21 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
     , m_world(
         _worldSize,
         {
-            GameLayers::DEFAULT_LAYER
+            RPPLayers::DEFAULT_LAYER
         },
         {
-            { GameTokens::EMPTY_TOKEN, ' ' },
-            { GameTokens::WALL_TOKEN,  '#' }
+            { RPPTokens::EMPTY_TOKEN,   ' ' },
+            { RPPTokens::WALL_TOKEN,    '#' },
+            { RPPTokens::PLAYER_TOKEN,  '&' }
         })
     , m_camera(_viewSize)
+    , m_player(RPPTokens::PLAYER_TOKEN)
     , m_renderGame(true)
 {
+    m_world.Add(&m_player);
 
+    m_camera.MoveTo(m_player.Transform()->Position());
+    m_camera.Clamp(m_world.worldSize);
 }
 
 void Game::Update()
@@ -48,7 +53,13 @@ void Game::Update()
 
     if (delta.x != 0 || delta.y != 0)
     {
-        m_camera.Move(delta);
+        Point2Int position = m_player.Transform()->Position();
+
+        position += delta;
+        position.Clamp(m_world.worldSize - Point2Int::One());
+
+        m_player.Transform()->Position(position);
+        m_camera.MoveTo(position);
         m_camera.Clamp(m_world.worldSize);
 
         RequestRender();
