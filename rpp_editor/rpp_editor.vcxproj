@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1a541d94-b51d-48cd-bfbd-17f332a28943}</ProjectGuid>
-    <RootNamespace>rppgame</RootNamespace>
+    <ProjectGuid>{f1e40f07-c4da-40fc-b81b-6dc8bd38d0b7}</ProjectGuid>
+    <RootNamespace>rppeditor</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,9 +70,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -107,7 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\rpp_engine\include;$(SolutionDir)\rpp_game\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,24 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\rpp_game.cpp" />
-    <ClCompile Include="src\Components\ComponentFactory.cpp" />
-    <ClCompile Include="src\Game\Game.cpp" />
-    <ClCompile Include="src\Entity\Entity.cpp" />
-    <ClCompile Include="src\World\World.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Components\ComponentBase.h" />
-    <ClInclude Include="include\Components\ComponentFactory.h" />
-    <ClInclude Include="include\Components\TransformComponent.h" />
-    <ClInclude Include="include\Game\Game.h" />
-    <ClInclude Include="include\RPPConstants.h" />
-    <ClInclude Include="include\Entity\Entity.h" />
-    <ClInclude Include="include\World\World.h" />
+    <ClCompile Include="rpp_editor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\rpp_engine\rpp_engine.vcxproj">
       <Project>{0bd1ae86-6c34-4c36-9eea-c7e1cf7ab387}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\rpp_game\rpp_game.vcxproj">
+      <Project>{1a541d94-b51d-48cd-bfbd-17f332a28943}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
