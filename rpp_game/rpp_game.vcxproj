@@ -136,6 +136,8 @@
     <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\ComponentTypeIds.h" />
+    <ClInclude Include="include\Components\Rendering\WorldRendererComponent.h" />
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\RPPConstants.h" />
     <ClInclude Include="include\World\World.h" />

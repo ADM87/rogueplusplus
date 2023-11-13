@@ -1,4 +1,6 @@
 #include <RPPConstants.h>
+#include <Components/ComponentTypeIds.h>
+#include <Components/Rendering/WorldRendererComponent.h>
 #include <Game/Game.h>
 
 using namespace rpp;
@@ -30,6 +32,8 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
     , m_player()
     , m_renderGame(true)
 {
+    m_player.AddComponent(new WorldRendererComponent(RPPLayers::DEFAULT_LAYER, RPPTokens::PLAYER_TOKEN));
+
     m_camera.MoveTo(0, 0);
 }
 

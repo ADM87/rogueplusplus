@@ -4,7 +4,7 @@
 
 namespace rpp
 {
-    namespace EngineComponentTypeIds
+    namespace ComponentTypeIds
     {
         static const std::string TRANSFORM = "TRANSFORM";
     }

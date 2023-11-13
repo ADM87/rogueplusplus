@@ -15,7 +15,8 @@ namespace rpp
         Entity();
         ~Entity();
 
-        IComponentBase* AddComponent(std::string _typeId);
+        Entity& AddComponent(IComponentBase* _component);
+
         IComponentBase* GetComponent(std::string _typeId);
 
         TransformComponent* Transform();
