@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Camera/Camera.h>
-#include <Entity/Entity.h>
+#include <ECS/Entity.h>
 #include <Keyboard/Keyboard.h>
 #include <Math/Point2.h>
 #include <World/World.h>

@@ -141,6 +141,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Camera\Camera.h" />
+    <ClInclude Include="include\ECS\EngineComponentTypeIds.h" />
+    <ClInclude Include="include\ECS\BuiltIn\TransformComponent.h" />
+    <ClInclude Include="include\ECS\BuiltIn\TransformTypeFactory.h" />
+    <ClInclude Include="include\ECS\IComponentBase.h" />
+    <ClInclude Include="include\ECS\ComponentFactory.h" />
+    <ClInclude Include="include\ECS\IComponentTypeFactory.h" />
+    <ClInclude Include="include\ECS\Entity.h" />
     <ClInclude Include="include\Keyboard\Keyboard.h" />
     <ClInclude Include="include\Keyboard\KeyCodes.h" />
     <ClInclude Include="include\Math\Point2.h" />
@@ -150,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera\Camera.cpp" />
+    <ClCompile Include="src\ECS\BuiltIn\TransformTypeFactory.cpp" />
+    <ClCompile Include="src\ECS\ComponentFactory.cpp" />
+    <ClCompile Include="src\ECS\Entity.cpp" />
     <ClCompile Include="src\Keyboard\Keyboard.cpp" />
     <ClCompile Include="src\Math\Rectangle.cpp" />
     <ClCompile Include="src\Structures\Grid.cpp" />

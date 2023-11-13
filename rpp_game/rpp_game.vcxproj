@@ -132,18 +132,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\rpp_game.cpp" />
-    <ClCompile Include="src\Components\ComponentFactory.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
-    <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Components\ComponentBase.h" />
-    <ClInclude Include="include\Components\ComponentFactory.h" />
-    <ClInclude Include="include\Components\TransformComponent.h" />
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\RPPConstants.h" />
-    <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\World\World.h" />
   </ItemGroup>
   <ItemGroup>

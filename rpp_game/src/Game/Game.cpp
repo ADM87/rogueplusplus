@@ -14,7 +14,7 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
             KeyCodes::UP_KEY,
             KeyCodes::DOWN_KEY,
             KeyCodes::LEFT_KEY,
-            KeyCodes::RIGHT_KEY            
+            KeyCodes::RIGHT_KEY
         })
     , m_world(
         _worldSize,
@@ -27,13 +27,10 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
             { RPPTokens::PLAYER_TOKEN,  '&' }
         })
     , m_camera(_viewSize)
-    , m_player(RPPTokens::PLAYER_TOKEN)
+    , m_player()
     , m_renderGame(true)
 {
-    m_world.Add(&m_player);
-
-    m_camera.MoveTo(m_player.Transform()->Position());
-    m_camera.Clamp(m_world.worldSize);
+    m_camera.MoveTo(0, 0);
 }
 
 void Game::Update()
@@ -54,13 +51,11 @@ void Game::Update()
     if (delta.x != 0 || delta.y != 0)
     {
         Point2Int position = m_player.Transform()->Position();
-
         position += delta;
-        position.Clamp(m_world.worldSize - Point2Int::One());
+        position.Clamp(m_world.worldSize);
 
         m_player.Transform()->Position(position);
         m_camera.MoveTo(position);
-        m_camera.Clamp(m_world.worldSize);
 
         RequestRender();
     }
