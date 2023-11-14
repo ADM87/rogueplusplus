@@ -1,6 +1,4 @@
 #include <RPPConstants.h>
-#include <Components/ComponentTypeIds.h>
-#include <Components/Rendering/WorldRendererComponent.h>
 #include <Game/Game.h>
 
 using namespace rpp;
@@ -29,11 +27,8 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
             { RPPTokens::PLAYER_TOKEN,  '&' }
         })
     , m_camera(_viewSize)
-    , m_player()
     , m_renderGame(true)
 {
-    m_player.AddComponent(new WorldRendererComponent(RPPLayers::DEFAULT_LAYER, RPPTokens::PLAYER_TOKEN));
-
     m_camera.MoveTo(0, 0);
 }
 
@@ -54,12 +49,7 @@ void Game::Update()
 
     if (delta.x != 0 || delta.y != 0)
     {
-        Point2Int position = m_player.Transform()->Position();
-        position += delta;
-        position.Clamp(m_world.worldSize);
-
-        m_player.Transform()->Position(position);
-        m_camera.MoveTo(position);
+        m_camera.Move(delta);
 
         RequestRender();
     }
