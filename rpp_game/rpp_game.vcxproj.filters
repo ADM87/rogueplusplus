@@ -35,5 +35,11 @@
     <ClInclude Include="include\RPPConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Components\TypeFactories\TransformTypeFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

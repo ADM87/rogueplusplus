@@ -136,6 +136,8 @@
     <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\TransformComponent.h" />
+    <ClInclude Include="include\Components\TypeFactories\TransformTypeFactory.h" />
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\RPPConstants.h" />
     <ClInclude Include="include\World\World.h" />

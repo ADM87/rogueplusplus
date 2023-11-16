@@ -1,10 +1,17 @@
+#include <Components/TypeFactories/TransformTypeFactory.h>
+#include <Ecs/ComponentFactory.h>
 #include <Game/Game.h>
+
+using namespace rpp;
 
 int main()
 {
-    rpp::Game game = rpp::Game(
-        rpp::Point2Int(50, 50),
-        rpp::Point2Int(45, 15));
+    ComponentFactory::GetInstance()
+        .AddType(new TransformTypeFactory("Transform"));
+
+    Game game = Game(
+        Point2Int(50, 50),
+        Point2Int(45, 15));
 
     do {
 
