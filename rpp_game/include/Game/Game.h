@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Camera/Camera.h>
-#include <Ecs/Entity.h>
+#include <Game/GameObject.h>
 #include <Keyboard/Keyboard.h>
 #include <Math/Point2.h>
 #include <World/World.h>
@@ -26,7 +26,7 @@ namespace rpp
         Keyboard m_keyboard;
         World m_world;
         Camera m_camera;
-        Entity m_player;
+        GameObject m_player;
 
         bool m_renderGame;
     };

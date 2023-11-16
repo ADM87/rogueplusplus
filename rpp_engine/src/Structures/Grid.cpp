@@ -55,5 +55,8 @@ const int Grid::At(const unsigned int& _x, const unsigned int& _y)
 
 const int Grid::At(const unsigned int& _i)
 {
+    if (_i >= Area())
+        return -1;
+
     return *(m_matrix + _i);
 }

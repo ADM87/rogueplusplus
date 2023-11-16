@@ -1,6 +1,8 @@
 #include <Ecs/ComponentFactory.h>
 #include <Ecs/Entity.h>
 
+#include <cassert>
+
 using namespace rpp;
 
 //
@@ -34,9 +36,7 @@ Entity::~Entity()
 Component* Entity::AddComponent(const std::string& _typeId)
 {
     Component* component = GetComponent(_typeId);
-
-    if (component != nullptr)
-        return component;
+    assert(("Detected duplicate component types on Entity", !component));
 
     component = ComponentFactory::GetInstance().Create(this, _typeId);
     

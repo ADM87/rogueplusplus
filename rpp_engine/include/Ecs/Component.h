@@ -15,6 +15,10 @@ namespace rpp
             : m_entity(_entity)
             , m_typeId(_typeId)
         {}
+        virtual ~Component();
+
+        Entity* const GetEntity()       { return m_entity; }
+        const std::string& GetTypeId()  { return m_typeId; }
 
     private:
 

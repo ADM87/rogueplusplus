@@ -27,13 +27,12 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
             { RPPTokens::PLAYER_TOKEN,  '&' }
         })
     , m_camera(_viewSize)
-    , m_player(
-        "Player", 
-        {
-            "Transform"
-        })
+    , m_player("Player")
     , m_renderGame(true)
 {
+    m_player.Renderer()->TokenKey(RPPTokens::PLAYER_TOKEN);
+    m_player.Transform()->Position(Point2Int(100, 100));
+
     m_camera.MoveTo(0, 0);
 }
 
