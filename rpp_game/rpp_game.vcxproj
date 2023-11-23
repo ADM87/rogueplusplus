@@ -139,8 +139,6 @@
   <ItemGroup>
     <ClInclude Include="include\Components\RendererComponent.h" />
     <ClInclude Include="include\Components\TransformComponent.h" />
-    <ClInclude Include="include\Components\TypeFactories\RendererTypeFactory.h" />
-    <ClInclude Include="include\Components\TypeFactories\TransformTypeFactory.h" />
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\Game\GameObject.h" />
     <ClInclude Include="include\RPPConstants.h" />

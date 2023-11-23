@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Ecs/Component.h>
+#include <Ecs/ComponentTypeFactory.h>
+
 #include <Math/Point2.h>
 
 namespace rpp
@@ -20,5 +22,21 @@ namespace rpp
     private:
 
         Point2Int m_position;
+    };
+
+
+    class TransformTypeFactory
+        : public ComponentTypeFactory
+    {
+    public:
+
+        TransformTypeFactory(const std::string& _typeId)
+            : ComponentTypeFactory(_typeId)
+        {}
+
+        Component* Create(Entity* _entity) override
+        {
+            return new TransformComponent(_entity, GetTypeId());
+        }
     };
 }

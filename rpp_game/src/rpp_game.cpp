@@ -1,6 +1,8 @@
-#include <Components/TypeFactories/TransformTypeFactory.h>
-#include <Components/TypeFactories/RendererTypeFactory.h>
+#include <Components/TransformComponent.h>
+#include <Components/TransformComponent.h>
+
 #include <Ecs/ComponentFactory.h>
+
 #include <Game/Game.h>
 
 using namespace rpp;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Ecs/Component.h>
+#include <Ecs/ComponentTypeFactory.h>
+
 #include <Structures/Token.h>
 
 namespace rpp
@@ -21,5 +23,21 @@ namespace rpp
     private:
 
         int m_tokenKey;
+    };
+
+
+    class RendererTypeFactory final
+        : public ComponentTypeFactory
+    {
+    public:
+
+        RendererTypeFactory(const std::string& _typeId)
+            : ComponentTypeFactory(_typeId)
+        {}
+
+        Component* Create(Entity* _entity) override
+        {
+            return new RendererComponent(_entity, GetTypeId());
+        }
     };
 }
