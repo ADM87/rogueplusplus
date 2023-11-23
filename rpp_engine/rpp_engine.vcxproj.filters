@@ -48,9 +48,6 @@
     <ClInclude Include="include\Ecs\ComponentTypeFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\World\World.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Math\Rectangle.cpp">
@@ -72,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Ecs\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\World\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
