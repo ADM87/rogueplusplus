@@ -159,6 +159,7 @@
     <ClCompile Include="src\Ecs\ComponentFactory.cpp" />
     <ClCompile Include="src\Ecs\Entity.cpp" />
     <ClCompile Include="src\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\Math\Point2.cpp" />
     <ClCompile Include="src\Math\Rectangle.cpp" />
     <ClCompile Include="src\Structures\Grid.cpp" />
   </ItemGroup>
