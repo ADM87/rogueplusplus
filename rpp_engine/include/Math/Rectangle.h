@@ -34,8 +34,12 @@ namespace rpp
 
         inline float Area() const { return width * height; }
 
+        Point2 Min() const;
+        Point2 Max() const;
+
         bool Contains(const float& _x, const float& _y) const;
-        bool Contains(const Point2& _point) const;
+        bool Contains(const Point2& _point)             const;
+        bool Overlaps(const Rectangle& _rectangle)    const;
     };
 
     struct RectangleInt
@@ -67,7 +71,11 @@ namespace rpp
 
         inline unsigned Area() const { return width * height; }
 
-        bool Contains(const int& _x, const int& _y) const;
-        bool Contains(const Point2Int& _point) const;
+        Point2Int Min() const;
+        Point2Int Max() const;
+
+        bool Contains(const int& _x, const int& _y)     const;
+        bool Contains(const Point2Int& _point)          const;
+        bool Overlaps(const RectangleInt& _rectangle)   const;
     };
 }

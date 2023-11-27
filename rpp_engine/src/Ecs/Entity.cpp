@@ -36,7 +36,9 @@ Entity::~Entity()
 Component* Entity::AddComponent(const std::string& _typeId)
 {
     Component* component = GetComponent(_typeId);
-    assert(("Detected duplicate component types on Entity", !component));
+
+    if (component != nullptr)
+        return component;
 
     component = ComponentFactory::GetInstance().Create(this, _typeId);
     

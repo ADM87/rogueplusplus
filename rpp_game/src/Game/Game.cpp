@@ -31,7 +31,15 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
     , m_renderGame(true)
 {
     m_player.Renderer()->TokenKey(RPPTokens::PLAYER_TOKEN);
-    m_player.Transform()->Position(Point2Int(100, 100));
+
+    m_world.AddChild(&m_player);
+
+    for (int i = 0; i < 20; i++)
+    {
+        auto go = new GameObject("Test_" + std::to_string(i));
+        go->Transform()->Position(Point2Int(rand() % _worldSize.x, rand() % _worldSize.y));
+        m_world.AddChild(go);
+    }
 
     m_camera.MoveTo(0, 0);
 }

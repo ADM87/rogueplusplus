@@ -134,6 +134,7 @@
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\rpp_game.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Structures\QuadTree.cpp" />
     <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\Game\GameObject.h" />
     <ClInclude Include="include\RPPConstants.h" />
+    <ClInclude Include="include\Structures\QuadTree.h" />
     <ClInclude Include="include\World\World.h" />
   </ItemGroup>
   <ItemGroup>
