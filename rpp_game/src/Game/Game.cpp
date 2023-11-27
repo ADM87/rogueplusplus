@@ -63,7 +63,12 @@ void Game::Update()
 
     if (delta.x != 0 || delta.y != 0)
     {
-        m_camera.Move(delta);
+        auto position = m_player.Transform()->Position();
+        position += delta;
+        position.Clamp(m_world.worldSize - Point2Int(1, 1));
+
+        m_player.Transform()->Position(position);
+        m_camera.MoveTo(position);
         m_camera.Clamp(m_world.worldSize);
 
         RequestRender();

@@ -79,8 +79,9 @@ void PruneBranch(QuadTreeNode* _branch)
 
 QuadTreeNode::~QuadTreeNode()
 {
-    // Don't delete the root!
+    // Don't delete the root node or parent node
     m_root = nullptr;
+    m_parent = nullptr;
 
     for (auto& branch : m_branches)
         PruneBranch(branch);
@@ -95,13 +96,13 @@ bool QuadTreeNode::Insert(GameObject* _gameObject)
         return false;
 
     // If depth is 0, the node cannot be subdivided so allow it to overflow.
-    if (m_depth == 0 || (m_branches.size() == 0 && m_gameObjects.size() < m_capacity))
+    if (m_depth == 0 || (!m_branches.size() && m_gameObjects.size() < m_capacity))
     {
         m_gameObjects.insert(_gameObject);
         return true;
     }
 
-    if (m_branches.size() == 0)
+    if (!m_branches.size())
     {
         Subdivide();
         for (auto& branch : m_branches)
@@ -157,13 +158,29 @@ void QuadTreeNode::Refresh(const Rectangle& _region)
     if (!_region.Overlaps(m_bounds))
         return;
 
-    if (m_branches.size() > 0)
+    if (m_branches.size())
     {
         for (auto& branch : m_branches)
             RefreshBranch(branch, _region);
+
+        std::unordered_set<GameObject*> container;
+        Query(m_bounds, container);
+
+        if (container.size() <= m_capacity)
+        {
+            if (container.size())
+                m_gameObjects.insert(container.begin(), container.end());
+
+            for (auto& branch : m_branches)
+                PruneBranch(branch);
+
+            m_branches.clear();
+        }
+
+        return;
     }
 
-    if (m_gameObjects.size() > 0)
+    if (m_gameObjects.size())
     {
         std::unordered_set<GameObject*> reinsert;
 
@@ -173,12 +190,12 @@ void QuadTreeNode::Refresh(const Rectangle& _region)
                 reinsert.insert(go);
         }
 
-        if (reinsert.size() > 0)
+        if (reinsert.size())
         {
-            for (auto& entry : reinsert)
+            for (auto& go : reinsert)
             {
-                m_gameObjects.erase(entry);
-                m_root->Insert(entry);
+                m_gameObjects.erase(go);
+                m_root->Insert(go);
             }
         }
     }
@@ -192,8 +209,8 @@ void QuadTreeNode::Subdivide()
     const float h = m_bounds.height / 2;
     const int depth = m_depth - 1;
 
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y,      w, h), m_root));
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y,      w, h), m_root));
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y + h,  w, h), m_root));
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y + h,  w, h), m_root));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y,      w, h), m_root, this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y,      w, h), m_root, this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y + h,  w, h), m_root, this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y + h,  w, h), m_root, this));
 }

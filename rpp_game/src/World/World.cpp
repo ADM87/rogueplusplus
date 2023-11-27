@@ -20,7 +20,7 @@ World::World(Point2Int _worldSize, std::vector<int> _layers, std::vector<std::pa
     , m_tokens()
     , worldSize(_worldSize)
 {
-    m_quadTree = QuadTreeNode(4, 1, Rectangle(0, 0, (float)_worldSize.x, (float)_worldSize.y), &m_quadTree);
+    m_quadTree = QuadTreeNode(4, 1, Rectangle(0, 0, (float)_worldSize.x, (float)_worldSize.y), &m_quadTree, nullptr);
 
     for (auto& layer : _layers)
         m_layers.insert({ layer, Grid(_worldSize.x, _worldSize.y) });
@@ -46,6 +46,10 @@ void World::RemoveChild(GameObject* _gameObject)
 //***********************************************************************
 void World::RenderRegion(const RectangleInt& _region)
 {
+    // TODO : This refresh is temporary. Objects moving within 
+    //        the world should be updating the regions of the quad tree they are in.
+    m_quadTree.Refresh(m_quadTree.Bounds());
+
     int regionStartX = _region.x - 1;
     int regionStartY = _region.y - 1;
     int regionEndX = _region.x + _region.width;
