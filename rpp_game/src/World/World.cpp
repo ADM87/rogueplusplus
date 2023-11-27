@@ -8,6 +8,8 @@
 using namespace rpp;
 
 #define UNKNOWN_TOKEN '?'
+#define VERTICAL_BORDER '|'
+#define HORIZONTAL_BORDER '='
 
 //
 // World
@@ -29,12 +31,12 @@ World::World(Point2Int _worldSize, std::vector<int> _layers, std::vector<std::pa
 
 void World::AddChild(GameObject* _gameObject)
 {
-    m_quadTree.Insert(_gameObject->Transform());
+    m_quadTree.Insert(_gameObject);
 }
 
 void World::RemoveChild(GameObject* _gameObject)
 {
-    m_quadTree.Erase(_gameObject->Transform());
+    m_quadTree.Erase(_gameObject);
 }
 
 //***********************************************************************
@@ -50,9 +52,9 @@ void World::RenderRegion(const RectangleInt& _region)
     int regionEndY = _region.y + _region.height;
 
     std::string buffer;
-    std::unordered_set<TransformComponent*> queryResult;
+    std::unordered_set<GameObject*> gameObjects;
 
-    m_quadTree.Query(_region, queryResult);
+    m_quadTree.Query(_region, gameObjects);
 
     for (int y = regionStartY; y <= regionEndY; y++)
     {
@@ -61,12 +63,12 @@ void World::RenderRegion(const RectangleInt& _region)
 #pragma region DrawWorldBorder
             if (y == regionStartY || y == regionEndY)
             {
-                buffer += '-';
+                buffer += HORIZONTAL_BORDER;
                 continue;
             }
             if (x == regionStartX || x == regionEndX)
             {
-                buffer += '|';
+                buffer += VERTICAL_BORDER;
                 continue;
             }
 #pragma endregion
@@ -74,7 +76,7 @@ void World::RenderRegion(const RectangleInt& _region)
             char token = UNKNOWN_TOKEN;
 
             if (x >= 0 && x < worldSize.x && y >= 0 && y < worldSize.y)
-                token = GetToken(x, y, queryResult);
+                token = GetToken(x, y, gameObjects);
 
             buffer += token;
         }
@@ -84,10 +86,10 @@ void World::RenderRegion(const RectangleInt& _region)
     }
 
     std::cout << buffer << std::endl;
-    std::cout << " GameObjects: " << std::to_string(queryResult.size()) << std::endl;
+    std::cout << " GameObjects: " << std::to_string(gameObjects.size()) << std::endl;
 }
 
-const char& World::GetToken(const int& _x, const int& _y, const std::unordered_set<TransformComponent*>& _transforms)
+const char& World::GetToken(const int& _x, const int& _y, const std::unordered_set<GameObject*>& _gameObjects)
 {
     auto firstLayer = m_layers.begin();
     auto currentLayer = m_layers.end();
@@ -95,13 +97,13 @@ const char& World::GetToken(const int& _x, const int& _y, const std::unordered_s
     int cell = -1;
     Point2Int position;
 
-    if (_transforms.size())
+    if (_gameObjects.size())
     {
-        for (auto& transform : _transforms)
+        for (auto& go : _gameObjects)
         {
-            position = transform->Position();
+            position = go->Transform()->Position();
             if (position.x == _x && position.y == _y)
-                return '&';
+                return m_tokens.at(go->Renderer()->TokenKey()).value;
         }
     }
 

@@ -16,14 +16,14 @@ namespace rpp
             , m_depth()
             , m_capacity()
             , m_root(nullptr)
-            , m_entries()
+            , m_gameObjects()
             , m_branches()
         {}
         QuadTreeNode(int _depth, int _capacity, const Rectangle& _bounds, QuadTreeNode* _root)
             : m_bounds(_bounds)
             , m_depth(_depth)
             , m_capacity(_capacity)
-            , m_entries()
+            , m_gameObjects()
             , m_branches()
             , m_root(_root)
         {}
@@ -31,18 +31,18 @@ namespace rpp
             : m_bounds(_node.m_bounds)
             , m_depth(_node.m_depth)
             , m_capacity(_node.m_capacity)
-            , m_entries(_node.m_entries)
+            , m_gameObjects(_node.m_gameObjects)
             , m_branches(_node.m_branches)
             , m_root(_node.m_root)
         {}
 
         ~QuadTreeNode();
 
-        bool Insert(TransformComponent* _transform);
-        bool Erase(TransformComponent* _transform);
-        bool Has(TransformComponent* _transform, bool _recursive = true);
+        bool Insert(GameObject* _transform);
+        bool Erase(GameObject* _transform);
+        bool Has(GameObject* _transform, bool _recursive = true);
 
-        void Query(const Rectangle& _region, std::unordered_set<TransformComponent*>& _result);
+        void Query(const Rectangle& _region, std::unordered_set<GameObject*>& _result);
         void Refresh(const Rectangle& _region);
         
     private:
@@ -50,7 +50,7 @@ namespace rpp
         QuadTreeNode*                           m_root;
         Rectangle                               m_bounds;
 
-        std::unordered_set<TransformComponent*> m_entries;
+        std::unordered_set<GameObject*> m_gameObjects;
         std::unordered_set<QuadTreeNode*>       m_branches;
 
         int m_depth;

@@ -32,6 +32,6 @@ namespace rpp
         std::map<int, Grid>             m_layers;
         std::unordered_map<int, Token>  m_tokens;
 
-        const char& GetToken(const int& _x, const int& _y, const std::unordered_set<TransformComponent*>& _transforms);
+        const char& GetToken(const int& _x, const int& _y, const std::unordered_set<GameObject*>& _gameObjects);
     };
 }

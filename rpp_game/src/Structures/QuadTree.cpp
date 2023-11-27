@@ -1,3 +1,4 @@
+#include <Game/GameObject.h>
 #include <Structures/QuadTree.h>
 
 #include <algorithm>
@@ -7,45 +8,45 @@ using namespace rpp;
 
 #pragma region TreeUtility
 
-bool InsertOnBranch(QuadTreeNode* _branch, TransformComponent* _transform)
+bool InsertOnBranch(QuadTreeNode* _branch, GameObject* _gameObject)
 {
     if (_branch == nullptr)
         return false;
 
-    return _branch->Insert(_transform);
+    return _branch->Insert(_gameObject);
 }
 
-bool RemoveFromBranch(QuadTreeNode* _branch, TransformComponent* _transform)
+bool RemoveFromBranch(QuadTreeNode* _branch, GameObject* _gameObject)
 {
     if (_branch == nullptr)
         return false;
 
-    return _branch->Erase(_transform);
+    return _branch->Erase(_gameObject);
 }
 
-bool BranchContains(QuadTreeNode* _node, TransformComponent* _transform, bool _recursive)
+bool BranchContains(QuadTreeNode* _node, GameObject* _gameObject, bool _recursive)
 {
     if (_node == nullptr)
         return false;
 
-    return _node->Has(_transform, _recursive);
+    return _node->Has(_gameObject, _recursive);
 }
 
-void DistributeToBranch(QuadTreeNode* _branch, std::unordered_set<TransformComponent*>& _enteries)
+void DistributeToBranch(QuadTreeNode* _branch, std::unordered_set<GameObject*>& _gameObjects)
 {
-    if (_branch == nullptr || _enteries.size() == 0)
+    if (_branch == nullptr || _gameObjects.size() == 0)
         return;
 
-    std::unordered_set<TransformComponent*> container(_enteries);
+    std::unordered_set<GameObject*> container(_gameObjects);
 
-    for (auto& entry : container)
+    for (auto& go : container)
     {
-        if (_branch->Insert(entry))
-            _enteries.erase(entry);
+        if (_branch->Insert(go))
+            _gameObjects.erase(go);
     }
 }
 
-void QueryBranch(QuadTreeNode* _branch, const Rectangle& _region, std::unordered_set<TransformComponent*>& _result)
+void QueryBranch(QuadTreeNode* _branch, const Rectangle& _region, std::unordered_set<GameObject*>& _result)
 {
     if (_branch == nullptr)
         return;
@@ -85,18 +86,18 @@ QuadTreeNode::~QuadTreeNode()
         PruneBranch(branch);
 
     m_branches.clear();
-    m_entries.clear();
+    m_gameObjects.clear();
 }
 
-bool QuadTreeNode::Insert(TransformComponent* _transform)
+bool QuadTreeNode::Insert(GameObject* _gameObject)
 {
-    if (_transform == nullptr || !m_bounds.Contains(_transform->Position()))
+    if (_gameObject == nullptr || !m_bounds.Contains(_gameObject->Transform()->Position()))
         return false;
 
     // If depth is 0, the node cannot be subdivided so allow it to overflow.
-    if (m_depth == 0 || (m_branches.size() == 0 && m_entries.size() < m_capacity))
+    if (m_depth == 0 || (m_branches.size() == 0 && m_gameObjects.size() < m_capacity))
     {
-        m_entries.insert(_transform);
+        m_gameObjects.insert(_gameObject);
         return true;
     }
 
@@ -104,31 +105,31 @@ bool QuadTreeNode::Insert(TransformComponent* _transform)
     {
         Subdivide();
         for (auto& branch : m_branches)
-            DistributeToBranch(branch, m_entries);
+            DistributeToBranch(branch, m_gameObjects);
 
-        assert(!m_entries.size() && "Failed to distribute quad tree entries to child branches");
+        assert(!m_gameObjects.size() && "Failed to distribute quad tree entries to child branches");
     }
 
     for (auto& branch : m_branches)
     {
-        if (InsertOnBranch(branch, _transform))
+        if (InsertOnBranch(branch, _gameObject))
             return true;
     }
 
     return false;
 }
 
-bool QuadTreeNode::Erase(TransformComponent* _transform)
+bool QuadTreeNode::Erase(GameObject* _gameObject)
 {
     return false;
 }
 
-bool QuadTreeNode::Has(TransformComponent* _transform, bool _recursive)
+bool QuadTreeNode::Has(GameObject* _gameObject, bool _recursive)
 {
     return false;
 }
 
-void QuadTreeNode::Query(const Rectangle& _region, std::unordered_set<TransformComponent*>& _result)
+void QuadTreeNode::Query(const Rectangle& _region, std::unordered_set<GameObject*>& _result)
 {
     if (!_region.Overlaps(m_bounds))
         return;
@@ -141,12 +142,12 @@ void QuadTreeNode::Query(const Rectangle& _region, std::unordered_set<TransformC
         return;
     }
 
-    if (m_entries.size())
+    if (m_gameObjects.size())
     {
-        for (auto& it : m_entries)
+        for (auto& go : m_gameObjects)
         {
-            if (_region.Contains(it->Position()))
-                _result.insert(it);
+            if (_region.Contains(go->Transform()->Position()))
+                _result.insert(go);
         }
     }
 }
@@ -162,21 +163,21 @@ void QuadTreeNode::Refresh(const Rectangle& _region)
             RefreshBranch(branch, _region);
     }
 
-    if (m_entries.size() > 0)
+    if (m_gameObjects.size() > 0)
     {
-        std::unordered_set<TransformComponent*> reinsert;
+        std::unordered_set<GameObject*> reinsert;
 
-        for (auto& entry : m_entries)
+        for (auto& go : m_gameObjects)
         {
-            if (!m_bounds.Contains(entry->Position()))
-                reinsert.insert(entry);
+            if (!m_bounds.Contains(go->Transform()->Position()))
+                reinsert.insert(go);
         }
 
         if (reinsert.size() > 0)
         {
             for (auto& entry : reinsert)
             {
-                m_entries.erase(entry);
+                m_gameObjects.erase(entry);
                 m_root->Insert(entry);
             }
         }

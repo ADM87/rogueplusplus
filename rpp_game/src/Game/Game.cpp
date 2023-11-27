@@ -38,10 +38,12 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
     {
         auto go = new GameObject("Test_" + std::to_string(i));
         go->Transform()->Position(Point2Int(rand() % _worldSize.x, rand() % _worldSize.y));
+        go->Renderer()->TokenKey(RPPTokens::WALL_TOKEN);
         m_world.AddChild(go);
     }
 
     m_camera.MoveTo(0, 0);
+    m_camera.Clamp(_worldSize);
 }
 
 void Game::Update()
@@ -62,6 +64,7 @@ void Game::Update()
     if (delta.x != 0 || delta.y != 0)
     {
         m_camera.Move(delta);
+        m_camera.Clamp(m_world.worldSize);
 
         RequestRender();
     }
