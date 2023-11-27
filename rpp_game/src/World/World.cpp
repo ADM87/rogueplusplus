@@ -44,6 +44,8 @@ void World::RemoveChild(GameObject* _gameObject)
 //***********************************************************************
 void World::RenderRegion(const RectangleInt& _region)
 {
+    int regionStartX = _region.x - 1;
+    int regionStartY = _region.y - 1;
     int regionEndX = _region.x + _region.width;
     int regionEndY = _region.y + _region.height;
 
@@ -52,10 +54,23 @@ void World::RenderRegion(const RectangleInt& _region)
 
     m_quadTree.Query(_region, queryResult);
 
-    for (int y = _region.y; y < regionEndY; y++)
+    for (int y = regionStartY; y <= regionEndY; y++)
     {
-        for (int x = _region.x; x < regionEndX; x++)
+        for (int x = regionStartX; x <= regionEndX; x++)
         {
+#pragma region DrawWorldBorder
+            if (y == regionStartY || y == regionEndY)
+            {
+                buffer += '-';
+                continue;
+            }
+            if (x == regionStartX || x == regionEndX)
+            {
+                buffer += '|';
+                continue;
+            }
+#pragma endregion
+
             char token = UNKNOWN_TOKEN;
 
             if (x >= 0 && x < worldSize.x && y >= 0 && y < worldSize.y)
@@ -64,12 +79,12 @@ void World::RenderRegion(const RectangleInt& _region)
             buffer += token;
         }
 
-        if (y + 1 < regionEndY)
+        if (y < regionEndY)
             buffer += '\n';
     }
 
     std::cout << buffer << std::endl;
-    std::cout << "Rendering GameObjects: " << std::to_string(queryResult.size()) << std::endl;
+    std::cout << " GameObjects: " << std::to_string(queryResult.size()) << std::endl;
 }
 
 const char& World::GetToken(const int& _x, const int& _y, const std::unordered_set<TransformComponent*>& _transforms)
@@ -80,19 +95,19 @@ const char& World::GetToken(const int& _x, const int& _y, const std::unordered_s
     int cell = -1;
     Point2Int position;
 
+    if (_transforms.size())
+    {
+        for (auto& transform : _transforms)
+        {
+            position = transform->Position();
+            if (position.x == _x && position.y == _y)
+                return '&';
+        }
+    }
+
     while (currentLayer != firstLayer)
     {
         currentLayer--;
-
-        if (_transforms.size())
-        {
-            for (auto& transform : _transforms)
-            {
-                position = transform->Position();
-                if (position.x == _x && position.y == _y)
-                    return '&';
-            }
-        }
 
         cell = currentLayer->second.At(_x, _y);
         if (cell > 0 || (cell == 0 && currentLayer == firstLayer))

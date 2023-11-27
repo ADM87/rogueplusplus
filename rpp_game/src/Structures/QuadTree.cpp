@@ -78,6 +78,7 @@ void PruneBranch(QuadTreeNode* _branch)
 
 QuadTreeNode::~QuadTreeNode()
 {
+    // Don't delete the root!
     m_root = nullptr;
 
     for (auto& branch : m_branches)
