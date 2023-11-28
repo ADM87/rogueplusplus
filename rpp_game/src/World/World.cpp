@@ -23,7 +23,7 @@ World::World(Point2Int _worldSize, std::vector<int> _layers, std::vector<std::pa
     , m_tokens()
     , worldSize(_worldSize)
 {
-    m_quadTree = QuadTreeNode(4, 1, Rectangle(0, 0, (float)_worldSize.x, (float)_worldSize.y), &m_quadTree, nullptr);
+    m_quadTree = QuadTreeNode(4, 1, Rectangle(0, 0, (float)_worldSize.x, (float)_worldSize.y), nullptr);
 
     for (auto& layer : _layers)
         m_layers.insert({ layer, Grid(_worldSize.x, _worldSize.y) });

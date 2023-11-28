@@ -16,6 +16,14 @@ bool InsertOnBranch(QuadTreeNode* _branch, GameObject* _gameObject)
     return _branch->Insert(_gameObject);
 }
 
+bool ReinsertOnBranch(QuadTreeNode* _branch, GameObject* _gameObject)
+{
+    if (_branch == nullptr)
+        return false;
+
+    return _branch->Reinsert(_gameObject);
+}
+
 bool RemoveFromBranch(QuadTreeNode* _branch, GameObject* _gameObject)
 {
     if (_branch == nullptr)
@@ -79,8 +87,7 @@ void PruneBranch(QuadTreeNode* _branch)
 
 QuadTreeNode::~QuadTreeNode()
 {
-    // Don't delete the root node or parent node
-    m_root = nullptr;
+    // Don't delete the parent node!
     m_parent = nullptr;
 
     for (auto& branch : m_branches)
@@ -118,6 +125,17 @@ bool QuadTreeNode::Insert(GameObject* _gameObject)
     }
 
     return false;
+}
+
+bool QuadTreeNode::Reinsert(GameObject* _gameObject)
+{
+    if (m_parent == nullptr || _gameObject == nullptr)
+        return false;
+
+    if (!m_parent->Insert(_gameObject))
+        return m_parent->Reinsert(_gameObject);
+
+    return true;
 }
 
 bool QuadTreeNode::Erase(GameObject* _gameObject)
@@ -199,9 +217,11 @@ void QuadTreeNode::Refresh(const Rectangle& _region)
         {
             for (auto& go : reinsert)
             {
-                m_gameObjects.erase(go);
-                m_root->Insert(go);
+                if (m_parent->Reinsert(go))
+                    m_gameObjects.erase(go);
             }
+
+            assert(reinsert.size() && ("Failed to reinsert some gameobjects into parent nodes"));
         }
     }
 }
@@ -214,8 +234,8 @@ void QuadTreeNode::Subdivide()
     const float h = m_bounds.height / 2;
     const int depth = m_depth - 1;
 
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y,      w, h), m_root, this));
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y,      w, h), m_root, this));
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y + h,  w, h), m_root, this));
-    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y + h,  w, h), m_root, this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y,      w, h), this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y,      w, h), this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x,      y + h,  w, h), this));
+    m_branches.insert(new QuadTreeNode(depth, m_capacity, Rectangle(x + w,  y + h,  w, h), this));
 }
