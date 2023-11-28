@@ -153,6 +153,11 @@ void QuadTreeNode::Query(const Rectangle& _region, std::unordered_set<GameObject
     }
 }
 
+void QuadTreeNode::Refresh()
+{
+    Refresh(m_bounds);
+}
+
 void QuadTreeNode::Refresh(const Rectangle& _region)
 {
     if (!_region.Overlaps(m_bounds))

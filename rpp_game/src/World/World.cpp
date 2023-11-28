@@ -7,9 +7,12 @@
 
 using namespace rpp;
 
-#define UNKNOWN_TOKEN '?'
-#define VERTICAL_BORDER '|'
-#define HORIZONTAL_BORDER '='
+constexpr auto UNKNOWN_TOKEN        = '?';
+constexpr auto VERTICAL_BORDER      = '|';
+constexpr auto HORIZONTAL_BORDER    = '=';
+constexpr auto NEW_LINE             = '\n';
+constexpr auto VERTICAL_OFFSET      = 2;
+constexpr auto HORIZONTAL_OFFSET    = 3;
 
 //
 // World
@@ -39,62 +42,52 @@ void World::RemoveChild(GameObject* _gameObject)
     m_quadTree.Erase(_gameObject);
 }
 
-//***********************************************************************
-// TODO - Now that entities exist, world rendering should be refactored.
-// Currently each cell being rendered with the region will iterate over 
-// all entities also within the region to check if they are in that cell.
-//***********************************************************************
 void World::RenderRegion(const RectangleInt& _region)
 {
-    // TODO : This refresh is temporary. Objects moving within 
-    //        the world should be updating the regions of the quad tree they are in.
-    m_quadTree.Refresh(m_quadTree.Bounds());
+    // TODO : This refresh is temporary.
+    m_quadTree.Refresh();
 
-    int regionStartX = _region.x - 1;
-    int regionStartY = _region.y - 1;
-    int regionEndX = _region.x + _region.width;
-    int regionEndY = _region.y + _region.height;
-
-    std::string buffer;
     std::unordered_set<GameObject*> gameObjects;
-
     m_quadTree.Query(_region, gameObjects);
 
-    for (int y = regionStartY; y <= regionEndY; y++)
+    int width = _region.width + HORIZONTAL_OFFSET;
+    int height = _region.height + VERTICAL_OFFSET;
+    int size = width * height;
+    int i = 0;
+
+    char token = UNKNOWN_TOKEN;
+    char* buffer = new char[size + 1];
+    *(buffer + size) = 0;
+
+    for (int y = 0; y < height; y++)
     {
-        for (int x = regionStartX; x <= regionEndX; x++)
+        for (int x = 0; x < width; x++)
         {
-#pragma region DrawWorldBorder
-            if (y == regionStartY || y == regionEndY)
-            {
-                buffer += HORIZONTAL_BORDER;
-                continue;
-            }
-            if (x == regionStartX || x == regionEndX)
-            {
-                buffer += VERTICAL_BORDER;
-                continue;
-            }
-#pragma endregion
+            i = y * width + x;
 
-            char token = UNKNOWN_TOKEN;
+            if (x + 1 == width)
+                token = NEW_LINE;
+            else if (y == 0 || y + VERTICAL_OFFSET - 1 == height)
+                token = HORIZONTAL_BORDER;
+            else if (x == 0 || x + HORIZONTAL_OFFSET - 1 == width)
+                token = VERTICAL_BORDER;
+            else
+                token = GetToken(_region.x + x - 1, _region.y + y - 1, gameObjects);
 
-            if (x >= 0 && x < worldSize.x && y >= 0 && y < worldSize.y)
-                token = GetToken(x, y, gameObjects);
-
-            buffer += token;
+            *(buffer + i) = token;
         }
-
-        if (y < regionEndY)
-            buffer += '\n';
     }
 
-    std::cout << buffer << std::endl;
-    std::cout << " GameObjects: " << std::to_string(gameObjects.size()) << std::endl;
+    std::cout << buffer;
+
+    delete[] buffer;
 }
 
 const char& World::GetToken(const int& _x, const int& _y, const std::unordered_set<GameObject*>& _gameObjects)
 {
+    if (_x < 0 || _x >= worldSize.x || _y < 0 || _y >= worldSize.y)
+        return UNKNOWN_TOKEN;
+
     auto firstLayer = m_layers.begin();
     auto currentLayer = m_layers.end();
 

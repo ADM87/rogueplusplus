@@ -47,6 +47,7 @@ namespace rpp
 
         void Query(const Rectangle& _region, std::unordered_set<GameObject*>& _result);
         void Refresh(const Rectangle& _region);
+        void Refresh();
 
         const Rectangle& Bounds() { return m_bounds; }
         
