@@ -32,14 +32,6 @@ bool RemoveFromBranch(QuadTreeNode* _branch, GameObject* _gameObject)
     return _branch->Erase(_gameObject);
 }
 
-bool BranchContains(QuadTreeNode* _node, GameObject* _gameObject, bool _recursive)
-{
-    if (_node == nullptr)
-        return false;
-
-    return _node->Has(_gameObject, _recursive);
-}
-
 void DistributeToBranch(QuadTreeNode* _branch, std::unordered_set<GameObject*>& _gameObjects)
 {
     if (_branch == nullptr || _gameObjects.size() == 0)
@@ -140,11 +132,27 @@ bool QuadTreeNode::Reinsert(GameObject* _gameObject)
 
 bool QuadTreeNode::Erase(GameObject* _gameObject)
 {
-    return false;
-}
+    if (m_branches.size())
+    {
+        for (auto& branch : m_branches)
+        {
+            if (RemoveFromBranch(branch, _gameObject))
+                return true;
+        }
 
-bool QuadTreeNode::Has(GameObject* _gameObject, bool _recursive)
-{
+        return false;
+    }
+
+    if (m_gameObjects.size())
+    {
+        auto it = std::find(m_gameObjects.begin(), m_gameObjects.end(), _gameObject);
+        if (it != m_gameObjects.end())
+        {
+            m_gameObjects.erase(it);
+            return true;
+        }
+    }
+
     return false;
 }
 

@@ -41,7 +41,6 @@ namespace rpp
         bool Insert(GameObject* _gameObject);
         bool Reinsert(GameObject* _trasform);
         bool Erase(GameObject* _gameObject);
-        bool Has(GameObject* _gameObject, bool _recursive = true);
 
         void Query(const Rectangle& _region, std::unordered_set<GameObject*>& _result);
         void Refresh(const Rectangle& _region);
