@@ -1,6 +1,8 @@
 #include <RPPConstants.h>
 #include <Game/Game.h>
 
+#include <Components/PlayerMovement.h>
+
 using namespace rpp;
 
 //
@@ -30,6 +32,7 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
     , m_player("Player")
     , m_renderGame(true)
 {
+    m_player.AddComponent<PlayerMovement>();
     m_player.Renderer()->TokenKey(RPPTokens::PLAYER_TOKEN);
 
     m_world.AddChild(&m_player);
@@ -49,6 +52,7 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
 void Game::Update()
 {
     m_keyboard.Poll();
+    m_world.Update();
 
     Point2Int delta;
 

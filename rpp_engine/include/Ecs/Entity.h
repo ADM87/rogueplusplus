@@ -20,6 +20,8 @@ namespace rpp
         {}
 
         virtual ~Entity();
+        
+        void Update();
 
         template<typename TComponent>
         TComponent* AddComponent()

@@ -20,6 +20,8 @@ namespace rpp
         Entity* const GetEntity()       { return m_entity; }
         const std::string& GetTypeId()  { return m_typeId; }
 
+        virtual void Update() {}
+
     private:
 
         Entity*     m_entity;

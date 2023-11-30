@@ -32,6 +32,12 @@ World::World(Point2Int _worldSize, std::vector<int> _layers, std::vector<std::pa
         m_tokens.insert({ token.first, Token(token.first, token.second) });
 }
 
+void World::Update()
+{
+    m_quadTree.Update();
+    m_quadTree.Refresh();
+}
+
 void World::AddChild(GameObject* _gameObject)
 {
     m_quadTree.Insert(_gameObject);
@@ -44,9 +50,6 @@ void World::RemoveChild(GameObject* _gameObject)
 
 void World::RenderRegion(const RectangleInt& _region)
 {
-    // TODO : This refresh is temporary.
-    m_quadTree.Refresh();
-
     std::unordered_set<GameObject*> gameObjects;
     m_quadTree.Query(_region, gameObjects);
 

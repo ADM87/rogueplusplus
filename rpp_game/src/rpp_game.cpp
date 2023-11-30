@@ -1,5 +1,6 @@
 #include <Components/TransformComponent.h>
-#include <Components/TransformComponent.h>
+#include <Components/RendererComponent.h>
+#include <Components/PlayerMovement.h>
 
 #include <Ecs/ComponentFactory.h>
 
@@ -11,7 +12,8 @@ int main()
 {
     ComponentFactory::GetInstance()
         .Add(new TransformComponentFactory())
-        .Add(new RendererComponentFactory());
+        .Add(new RendererComponentFactory())
+        .Add(new PlayerMovementComponentFactory());
 
     Game game = Game(
         Point2Int(50, 50),

@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\PlayerMovement.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\rpp_game.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
@@ -138,6 +139,8 @@
     <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\GameObjectComponent.h" />
+    <ClInclude Include="include\Components\PlayerMovement.h" />
     <ClInclude Include="include\Components\RendererComponent.h" />
     <ClInclude Include="include\Components\TransformComponent.h" />
     <ClInclude Include="include\Game\Game.h" />

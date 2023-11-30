@@ -17,6 +17,15 @@ Entity::~Entity()
     m_components.clear();
 }
 
+void Entity::Update()
+{
+    if (m_components.size())
+    {
+        for (auto& kvp : m_components)
+            kvp.second->Update();
+    }
+}
+
 Component* Entity::AddComponent(const std::string& _typeId)
 {
     Component* component = GetComponent(_typeId);

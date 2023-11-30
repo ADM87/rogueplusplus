@@ -40,6 +40,14 @@ bool ExistsOnBranch(QuadTreeNode* _branch, GameObject* _gameObject)
     return _branch->Has(_gameObject);
 }
 
+void UpdateBranch(QuadTreeNode* _branch)
+{
+    if (_branch == nullptr)
+        return;
+
+    _branch->Update();
+}
+
 void DistributeToBranch(QuadTreeNode* _branch, std::unordered_set<GameObject*>& _gameObjects)
 {
     if (_branch == nullptr || _gameObjects.size() == 0)
@@ -258,6 +266,23 @@ void QuadTreeNode::Refresh(const Rectangle& _region)
 
             assert(reinsert.size() && ("Failed to reinsert some gameobjects into parent nodes"));
         }
+    }
+}
+
+void QuadTreeNode::Update()
+{
+    if (m_branches.size())
+    {
+        for (auto& branch : m_branches)
+            branch->Update();
+
+        return;
+    }
+
+    if (m_gameObjects.size())
+    {
+        for (auto& go : m_gameObjects)
+            go->Update();
     }
 }
 

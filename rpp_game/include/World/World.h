@@ -20,9 +20,9 @@ namespace rpp
 
         World(Point2Int _worldSize, std::vector<int> _layers, std::vector<std::pair<int, char>> _tokens);
 
+        void Update();
         void AddChild(GameObject* _gameObject);
         void RemoveChild(GameObject* _gameObject);
-
         void RenderRegion(const RectangleInt& _region);
 
     private:
