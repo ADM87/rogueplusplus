@@ -8,20 +8,30 @@ using namespace rpp;
 // GameObject
 //
 
-TransformComponent* const GameObject::Transform()
+GameObject::GameObject()
+    : Entity("GameObject")
+    , m_transform(nullptr)
+    , m_renderer(nullptr)
 {
-    if (m_transform == nullptr)
-        m_transform = AddComponent<TransformComponent>("Transform");
-
-    assert(("GameObject is missing its transform component", m_transform != nullptr));
-    return m_transform;
+    Initialize();
 }
 
-RendererComponent* const GameObject::Renderer()
+GameObject::GameObject(const std::string& _name)
+    : Entity(_name)
+    , m_transform(nullptr)
+    , m_renderer(nullptr)
 {
-    if (m_renderer == nullptr)
-        m_renderer = AddComponent<RendererComponent>("Renderer");
+    Initialize();
+}
 
-    assert(("GameObject is missing its renderer component", m_renderer != nullptr));
-    return m_renderer;
+GameObject::~GameObject()
+{
+    m_transform = nullptr;
+    m_renderer = nullptr;
+}
+
+void GameObject::Initialize()
+{
+    m_transform = AddComponent<TransformComponent>();
+    m_renderer = AddComponent<RendererComponent>();
 }

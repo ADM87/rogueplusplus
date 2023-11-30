@@ -10,8 +10,8 @@ using namespace rpp;
 int main()
 {
     ComponentFactory::GetInstance()
-        .AddType(new TransformTypeFactory("Transform"))
-        .AddType(new RendererTypeFactory("Renderer"));
+        .Add(new TransformComponentFactory())
+        .Add(new RendererComponentFactory());
 
     Game game = Game(
         Point2Int(50, 50),

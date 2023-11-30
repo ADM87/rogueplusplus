@@ -18,7 +18,7 @@ namespace rpp
             return instance;
         }
 
-        ComponentFactory& AddType(ComponentTypeFactory* _typeFactory);
+        ComponentFactory& Add(ComponentTypeFactory* _typeFactory);
 
         Component* Create(Entity* _entity, const std::string& _typeId);
         void Destroy(Component* _component);

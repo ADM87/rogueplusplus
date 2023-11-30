@@ -8,7 +8,7 @@ using namespace rpp;
 // ComponentFactory
 //
 
-ComponentFactory& ComponentFactory::AddType(ComponentTypeFactory* _typeFactory)
+ComponentFactory& ComponentFactory::Add(ComponentTypeFactory* _typeFactory)
 {
     assert(("Provided type factory callnot be null", _typeFactory != nullptr));
 

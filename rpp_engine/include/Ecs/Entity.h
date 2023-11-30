@@ -4,6 +4,7 @@
 
 #include <string>
 #include <type_traits>
+#include <typeinfo>
 #include <unordered_map>
 
 namespace rpp
@@ -17,24 +18,22 @@ namespace rpp
             : m_components()
             , m_name(_name)
         {}
-        Entity(const std::vector<std::string> &_componentTypeIds);
-        Entity(const std::string& _name, const std::vector<std::string>& _componentTypeIds);
 
         virtual ~Entity();
 
         template<typename TComponent>
-        TComponent* AddComponent(const std::string& _typeId)
+        TComponent* AddComponent()
         {
             static_assert(std::is_base_of<Component, TComponent>::value);
-            return dynamic_cast<TComponent*>(AddComponent(_typeId));
+            return dynamic_cast<TComponent*>(AddComponent(typeid(TComponent).name()));
         }
         Component* AddComponent(const std::string& _typeId);
 
         template<typename TComponent>
-        TComponent* GetComponent(const std::string& _typeId)
+        TComponent* GetComponent()
         {
             static_assert(std::is_base_of<Component, TComponent>::value);
-            return dynamic_cast<TComponent*>(GetComponent(_typeId));
+            return dynamic_cast<TComponent*>(GetComponent(typeid(TComponent).name()));
         }
         Component* GetComponent(const std::string& _typeId);
 

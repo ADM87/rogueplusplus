@@ -12,18 +12,18 @@ namespace rpp
     {
     public:
 
-        GameObject(const std::string& _name)
-            : Entity(_name, { "Transform", "Renderer" })
-            , m_transform(nullptr)
-            , m_renderer(nullptr)
-        {}
+        GameObject();
+        GameObject(const std::string& _name);
+        ~GameObject() override;
 
-        TransformComponent* const Transform();
-        RendererComponent*  const Renderer();
+        TransformComponent* const Transform()   { return m_transform; }
+        RendererComponent*  const Renderer()    { return m_renderer; }
 
     private:
 
         TransformComponent* m_transform;
         RendererComponent*  m_renderer;
+
+        void Initialize();
     };
 }

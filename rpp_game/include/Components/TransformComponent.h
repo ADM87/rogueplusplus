@@ -24,14 +24,13 @@ namespace rpp
         Point2Int m_position;
     };
 
-
-    class TransformTypeFactory
+    class TransformComponentFactory
         : public ComponentTypeFactory
     {
     public:
 
-        TransformTypeFactory(const std::string& _typeId)
-            : ComponentTypeFactory(_typeId)
+        TransformComponentFactory()
+            : ComponentTypeFactory(typeid(TransformComponent).name())
         {}
 
         Component* Create(Entity* _entity) override

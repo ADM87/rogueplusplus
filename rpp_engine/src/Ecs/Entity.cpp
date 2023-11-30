@@ -9,22 +9,6 @@ using namespace rpp;
 // Entity
 //
 
-Entity::Entity(const std::vector<std::string>& _componentTypeIds)
-    : m_components()
-    , m_name("Entity")
-{
-    for (auto& id : _componentTypeIds)
-        AddComponent(id);
-}
-
-Entity::Entity(const std::string& _name, const std::vector<std::string>& _componentTypeIds)
-    : m_components()
-    , m_name(_name)
-{
-    for (auto& id : _componentTypeIds)
-        AddComponent(id);
-}
-
 Entity::~Entity()
 {
     for (auto& it : m_components)

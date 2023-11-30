@@ -26,13 +26,13 @@ namespace rpp
     };
 
 
-    class RendererTypeFactory final
+    class RendererComponentFactory final
         : public ComponentTypeFactory
     {
     public:
 
-        RendererTypeFactory(const std::string& _typeId)
-            : ComponentTypeFactory(_typeId)
+        RendererComponentFactory()
+            : ComponentTypeFactory(typeid(RendererComponent).name())
         {}
 
         Component* Create(Entity* _entity) override
