@@ -32,6 +32,14 @@ bool RemoveFromBranch(QuadTreeNode* _branch, GameObject* _gameObject)
     return _branch->Erase(_gameObject);
 }
 
+bool ExistsOnBranch(QuadTreeNode* _branch, GameObject* _gameObject)
+{
+    if (_branch == nullptr)
+        return false;
+
+    return _branch->Has(_gameObject);
+}
+
 void DistributeToBranch(QuadTreeNode* _branch, std::unordered_set<GameObject*>& _gameObjects)
 {
     if (_branch == nullptr || _gameObjects.size() == 0)
@@ -152,6 +160,25 @@ bool QuadTreeNode::Erase(GameObject* _gameObject)
             return true;
         }
     }
+
+    return false;
+}
+
+bool QuadTreeNode::Has(GameObject* _gameObject)
+{
+    if (m_branches.size())
+    {
+        for (auto& branch : m_branches)
+        {
+            if (ExistsOnBranch(branch, _gameObject))
+                return true;
+        }
+
+        return false;
+    }
+
+    if (m_gameObjects.size())
+        return std::find(m_gameObjects.begin(), m_gameObjects.end(), _gameObject) != m_gameObjects.end();
 
     return false;
 }
