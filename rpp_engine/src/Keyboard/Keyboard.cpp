@@ -26,11 +26,12 @@ void Key::Poll()
 // Keyboard
 //
 
-Keyboard::Keyboard(std::vector<KeyCodes> _keyCodes)
-    : m_keys()
+Keyboard& Keyboard::Add(const KeyCodes& _keyCode)
 {
-    for (auto& keyCode : _keyCodes)
-        m_keys.insert({ keyCode, Key(keyCode) });
+    if (m_keys.count(_keyCode) == 0)
+        m_keys.insert({ _keyCode, Key(_keyCode) });
+
+    return *this;
 }
 
 void Keyboard::Poll()

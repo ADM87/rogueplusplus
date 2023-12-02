@@ -2,7 +2,6 @@
 
 #include <Camera/Camera.h>
 #include <Game/GameObject.h>
-#include <Keyboard/Keyboard.h>
 #include <Math/Point2.h>
 #include <World/World.h>
 
@@ -23,7 +22,6 @@ namespace rpp
 
     private:
 
-        Keyboard m_keyboard;
         World m_world;
         Camera m_camera;
         GameObject m_player;

@@ -2,8 +2,8 @@
 
 #include <Keyboard/KeyCodes.h>
 
-#include <vector>
-#include <map>
+#include <unordered_map>
+#include <unordered_set>
 
 namespace rpp
 {
@@ -43,7 +43,11 @@ namespace rpp
     {
     public:
 
-        Keyboard(std::vector<KeyCodes> _keyCodes);
+        static Keyboard& GetInstance()
+        {
+            static Keyboard instance;
+            return instance;
+        }
 
         void Poll();
 
@@ -51,9 +55,13 @@ namespace rpp
         bool IsHeld(KeyCodes _keyCode);
         bool IsUp(KeyCodes _keyCode);
 
+        Keyboard& Add(const KeyCodes& _keyCode);
+
     private:
 
-        std::map<KeyCodes, Key> m_keys;
+        std::unordered_map<KeyCodes, Key> m_keys;
+
+        Keyboard() = default;
     };
 }
 

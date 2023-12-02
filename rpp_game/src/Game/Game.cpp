@@ -2,6 +2,7 @@
 #include <Game/Game.h>
 
 #include <Components/PlayerMovement.h>
+#include <Keyboard/Keyboard.h>
 
 using namespace rpp;
 
@@ -10,15 +11,7 @@ using namespace rpp;
 //
 
 Game::Game(Point2Int _worldSize, Point2Int _viewSize)
-    : m_keyboard(
-        {
-            KeyCodes::ESCAPE_KEY,
-            KeyCodes::UP_KEY,
-            KeyCodes::DOWN_KEY,
-            KeyCodes::LEFT_KEY,
-            KeyCodes::RIGHT_KEY
-        })
-    , m_world(
+    : m_world(
         _worldSize,
         {
             RPPLayers::DEFAULT_LAYER
@@ -51,32 +44,9 @@ Game::Game(Point2Int _worldSize, Point2Int _viewSize)
 
 void Game::Update()
 {
-    m_keyboard.Poll();
+    Keyboard::GetInstance().Poll();
+
     m_world.Update();
-
-    Point2Int delta;
-
-    if (m_keyboard.IsDown(KeyCodes::UP_KEY))
-        delta.y = -1;
-    if (m_keyboard.IsDown(KeyCodes::DOWN_KEY))
-        delta.y = 1;
-    if (m_keyboard.IsDown(KeyCodes::LEFT_KEY))
-        delta.x = -1;
-    if (m_keyboard.IsDown(KeyCodes::RIGHT_KEY))
-        delta.x = 1;
-
-    if (delta.x != 0 || delta.y != 0)
-    {
-        auto position = m_player.Transform()->Position();
-        position += delta;
-        position.Clamp(m_world.worldSize - Point2Int(1, 1));
-
-        m_player.Transform()->Position(position);
-        m_camera.MoveTo(position);
-        m_camera.Clamp(m_world.worldSize);
-
-        RequestRender();
-    }
 }
 
 void Game::Render()
@@ -99,5 +69,5 @@ bool Game::HasRenderRequest()
 
 bool Game::IsRunning()
 {
-    return !m_keyboard.IsDown(KeyCodes::ESCAPE_KEY);
+    return !Keyboard::GetInstance().IsDown(KeyCodes::ESCAPE_KEY);
 }
