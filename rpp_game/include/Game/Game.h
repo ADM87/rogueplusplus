@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Camera/Camera.h>
-#include <Game/GameObject.h>
 #include <Math/Point2.h>
 #include <World/World.h>
 
