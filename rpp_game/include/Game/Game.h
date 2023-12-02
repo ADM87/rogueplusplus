@@ -13,6 +13,8 @@ namespace rpp
 
         Game(Point2Int _worldSize, Point2Int _viewSize);
 
+        void Start();
+        void End();
         void Update();
         void Render();
         void RequestRender();
@@ -23,8 +25,6 @@ namespace rpp
     private:
 
         World m_world;
-        Camera m_camera;
-        GameObject m_player;
 
         bool m_renderGame;
     };

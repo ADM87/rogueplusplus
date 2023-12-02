@@ -8,6 +8,7 @@ using namespace rpp;
 
 void GameLoop::Begin(Game* _game)
 {
+    _game->Start();
     do {
 
         _game->Update();
@@ -16,6 +17,5 @@ void GameLoop::Begin(Game* _game)
             _game->Render();
 
     } while (_game->IsRunning());
-
-    delete _game;
+    _game->End();
 }

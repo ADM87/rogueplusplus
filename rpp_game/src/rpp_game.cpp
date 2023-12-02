@@ -10,6 +10,8 @@ using namespace rpp;
 
 int main()
 {
+    Game game(Point2Int(50, 50), Point2Int(45, 15));
+
     // Register component factories
     ComponentFactory::GetInstance()
         .Add(new TransformComponentFactory())
@@ -24,6 +26,5 @@ int main()
         .Add(KeyCodes::LEFT_KEY)
         .Add(KeyCodes::RIGHT_KEY);
 
-    GameLoop::GetInstance().Begin(
-        new Game(Point2Int(50, 50), Point2Int(45, 15)));
+    GameLoop::GetInstance().Begin(&game);
 }
