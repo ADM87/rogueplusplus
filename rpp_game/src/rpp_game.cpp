@@ -1,12 +1,10 @@
 #include <Components/TransformComponent.h>
 #include <Components/RendererComponent.h>
 #include <Components/PlayerMovement.h>
-
 #include <Ecs/ComponentFactory.h>
-
 #include <Keyboard/Keyboard.h>
-
 #include <Game/Game.h>
+#include <Game/GameLoop.h>
 
 using namespace rpp;
 
@@ -26,16 +24,6 @@ int main()
         .Add(KeyCodes::LEFT_KEY)
         .Add(KeyCodes::RIGHT_KEY);
 
-    Game game = Game(
-        Point2Int(50, 50),
-        Point2Int(45, 15));
-
-    do {
-
-        game.Update();
-
-        if (game.HasRenderRequest())
-            game.Render();
-
-    } while (game.IsRunning());
+    GameLoop::GetInstance().Begin(
+        new Game(Point2Int(50, 50), Point2Int(45, 15)));
 }

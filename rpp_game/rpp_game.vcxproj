@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\PlayerMovement.cpp" />
+    <ClCompile Include="src\Game\GameLoop.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\rpp_game.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="include\Components\RendererComponent.h" />
     <ClInclude Include="include\Components\TransformComponent.h" />
     <ClInclude Include="include\Game\Game.h" />
+    <ClInclude Include="include\Game\GameLoop.h" />
     <ClInclude Include="include\Game\GameObject.h" />
     <ClInclude Include="include\RPPConstants.h" />
     <ClInclude Include="include\Structures\QuadTree.h" />
